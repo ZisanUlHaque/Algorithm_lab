@@ -1,0 +1,119 @@
+-- 1. Creating the student table and inserting values
+CREATE TABLE student (
+roll VARCHAR(10) PRIMARY KEY,
+name VARCHAR(50),
+dept VARCHAR(10),
+year VARCHAR(10),
+semester VARCHAR(10)
+);
+
+INSERT INTO student VALUES
+('06543201', 'Rahim', 'BBA', '2nd', '1st'),
+('06543202', 'Karim', 'ICE', '2nd', '1st'),
+('06543203', 'Motin', 'CSE', '1st', '2nd'),
+('05654456', 'Swadhin', 'CSE', '1st', '2nd'),
+('05654457', 'Hena', 'BBA', '4th', '2nd'),
+('05654458', 'Shohag', 'CSE', '3rd', '1st');
+
+-- 2. Creating the studentInfo table and inserting values
+CREATE TABLE studentInfo (
+roll VARCHAR(10) PRIMARY KEY,
+name VARCHAR(50),
+fatherName VARCHAR(50),
+address VARCHAR(50),
+mobile VARCHAR(15)
+);
+
+INSERT INTO studentInfo VALUES
+('06543201', 'Rahim', 'Ataur', 'Rajshahi', '01719201233'),
+('06543202', 'Karim', 'Tareq', 'Dhaka', '01719202020'),
+('06543203', 'Motin', 'Rahman', 'Khulna', '01719202678'),
+('05654456', 'Swadhin', 'Fazlu', 'Rajshahi', '01719204564'),
+('05654457', 'Hena', 'Rahman', 'Rajshahi', '01119212020'),
+('05654458', 'Shohag', 'Fazlul', 'Natore', '01719202222');
+
+-- 3. Queries
+-- i. Find out students based on conditions
+SELECT name FROM student WHERE semester = '1st';
+SELECT name FROM student WHERE year = '2nd';
+SELECT name FROM student WHERE dept = 'CSE';
+SELECT name FROM student WHERE roll = '06543201';
+-- ii. Find out student details based on conditions
+SELECT name, address, mobile FROM studentInfo WHERE fatherName = 'Rahman';
+SELECT name, address, mobile FROM studentInfo WHERE mobile = '01719202020';
+SELECT name, address, mobile FROM studentInfo WHERE address = 'Rajshahi';
+SELECT name, address, mobile FROM studentInfo WHERE address = 'Rajshahi' AND fatherName = 'Rahman';
+SELECT name, address, mobile FROM studentInfo WHERE roll = '05654456';
+
+-- 4. Creating the employee and works tables
+CREATE TABLE employee (
+employee_name VARCHAR(50) PRIMARY KEY,
+street VARCHAR(50),
+city VARCHAR(50)
+);
+CREATE TABLE works (
+employee_name VARCHAR(50),
+company_name VARCHAR(50),
+salary INT,
+PRIMARY KEY (employee_name, company_name),
+FOREIGN KEY (employee_name) REFERENCES employee(employee_name)
+);
+-- Insert values into employee
+INSERT INTO employee VALUES
+('Arif', '51 upashahar', 'Rajshahi'),
+('Sumon', '52 east Moynamati', 'Abdul'),
+('Sagor', 'Neemgachhi', 'Sirajgong'),
+('Abdul', 'Binodpur', 'Rajshahi'),
+('Himesh', 'Nazrul avenue', 'Dhaka'),
+('Amirul', 'Chawk bazar', 'Sylhet'),
+('Sajib', '99 north', 'Chittagong');
+-- Insert values into works
+INSERT INTO works VALUES
+('Sumon', 'Agrani', 12000),
+('Abdul', 'Sonali', 13000),
+('Himesh', 'Agrani', 6000),
+('Sagor', 'Sonali', 8000),
+('Amirul', 'Janata', 13000),
+('Sajib', 'Janata', 9000);
+
+-- Queries
+B. SELECT employee_name FROM employee WHERE city = 'Rajshahi';
+
+C. SELECT employee_name, street FROM employee WHERE city = 'Rajshahi';
+
+D. SELECT employee_name FROM works WHERE company_name = 'Sonali';
+SELECT employee_name FROM works WHERE company_name = 'Agrani';
+SELECT employee_name FROM works WHERE company_name = 'Janata';
+
+E. SELECT employee_name, salary FROM works WHERE company_name = 'Sonali';
+SELECT employee_name, salary FROM works WHERE company_name = 'Agrani';
+SELECT employee_name, salary FROM works WHERE company_name = 'Janata';
+
+F. SELECT employee_name FROM works WHERE salary = 12000;
+SELECT employee_name FROM works WHERE salary >= 12000;
+SELECT employee_name FROM works WHERE salary < 12000;
+
+G. SELECT employee_name, company_name FROM works WHERE salary = 12000;
+SELECT employee_name, company_name FROM works WHERE salary >= 12000;
+SELECT employee_name, company_name FROM works WHERE salary < 12000;
+
+H. SELECT e.employee_name, e.street, e.city FROM employee e JOIN works w ON e.employee_name = w.employee_name WHERE w.company_name = 'Agrani';
+
+I. SELECT e.employee_name, e.street, e.city FROM employee e JOIN works w ON e.employee_name = w.employee_name WHERE w.salary >= 10000;
+
+J. SELECT e.employee_name, w.company_name, w.salary FROM employee e JOIN works w ON e.employee_name = w.employee_name WHERE e.city = 'Rajshahi';
+
+K. SELECT e.employee_name, e.street, e.city, w.company_name FROM employee e JOIN works w ON e.employee_name = w.employee_name WHERE w.salary >= 10000;
+
+L. SELECT e.employee_name, e.street, e.city FROM employee e JOIN works w ON e.employee_name = w.employee_name WHERE w.company_name = 'Sonali' AND w.salary > 12000;
+
+M. SELECT employee_name FROM works WHERE employee_name NOT IN (SELECT employee_name FROM works WHERE company_name = 'Sonali');
+
+N. UPDATE employee SET city = 'Natore' WHERE employee_name = 'Arif';
+
+O. UPDATE works SET salary = salary * 1.10 WHERE company_name = 'Agrani';
+
+
+P. DELETE FROM employee WHERE employee_name = 'Sagor';
+
+Q. ALTER TABLE works ADD COLUMN manager VARCHAR(50);-
